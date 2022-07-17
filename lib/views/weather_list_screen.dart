@@ -1,11 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:weather_app/views/weather_vo.dart';
 
 class WeatherListScreen extends StatelessWidget {
   const WeatherListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var weatherList = [
+      const WeatherVo(
+        countryIcon: "🇼🇸",
+        country: "Taiwan",
+        city: "Taipei",
+        temperature: 38,
+        windSpeed: 8.75,
+        weatherIcon: "http://openweathermap.org/img/wn/10d@2x.png",
+      ),
+    ];
     return Scaffold(
       appBar: AppBar(
         systemOverlayStyle: SystemUiOverlayStyle.dark,
@@ -18,9 +29,10 @@ class WeatherListScreen extends StatelessWidget {
         ),
       ),
       body: ListView.builder(
-        itemCount: 1,
+        itemCount: weatherList.length,
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 18),
         itemBuilder: (context, index) {
+          var weather = weatherList[index];
           return Card(
             shape: RoundedRectangleBorder(
               side: const BorderSide(color: Colors.black),
@@ -34,39 +46,41 @@ class WeatherListScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text.rich(
+                        Text.rich(
                           TextSpan(
                             children: [
                               TextSpan(
-                                text: "🇼🇸 ",
-                                style: TextStyle(fontSize: 24),
+                                text: "${weather.countryIcon} ",
+                                style: const TextStyle(fontSize: 24),
                               ),
-                              TextSpan(text: "Taiwan / Taipei"),
+                              TextSpan(
+                                text: "${weather.country} / ${weather.city}",
+                              ),
                             ],
                           ),
                         ),
                         const SizedBox(height: 4),
                         Row(
-                          children: const [
-                            Expanded(flex: 3, child: Text("Temperature")),
+                          children: [
+                            const Expanded(flex: 3, child: Text("Temperature")),
                             Expanded(
                               flex: 5,
                               child: Text(
-                                "38°C",
-                                style: TextStyle(color: Colors.orange),
+                                "${weather.temperature} °C",
+                                style: const TextStyle(color: Colors.orange),
                               ),
                             ),
                           ],
                         ),
                         const SizedBox(height: 4),
                         Row(
-                          children: const [
-                            Expanded(flex: 3, child: Text("Wind Speed")),
+                          children: [
+                            const Expanded(flex: 3, child: Text("Wind Speed")),
                             Expanded(
                               flex: 5,
                               child: Text(
-                                "8.75",
-                                style: TextStyle(color: Colors.blue),
+                                weather.windSpeed.toString(),
+                                style: const TextStyle(color: Colors.blue),
                               ),
                             ),
                           ],
@@ -74,7 +88,7 @@ class WeatherListScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Image.network("http://openweathermap.org/img/wn/10d@2x.png"),
+                  Image.network(weather.weatherIcon),
                 ],
               ),
             ),
