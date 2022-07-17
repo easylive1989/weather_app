@@ -16,6 +16,30 @@ class WeatherListScreen extends StatelessWidget {
         windSpeed: 8.75,
         weatherIcon: "http://openweathermap.org/img/wn/10d@2x.png",
       ),
+      const WeatherVo(
+        countryIcon: "🇩🇪",
+        country: "Germany",
+        city: "Berlin",
+        temperature: 38,
+        windSpeed: 8.75,
+        weatherIcon: "http://openweathermap.org/img/wn/10d@2x.png",
+      ),
+      const WeatherVo(
+        countryIcon: "🇬🇧",
+        country: "United Kingdom",
+        city: "London",
+        temperature: 38,
+        windSpeed: 8.75,
+        weatherIcon: "http://openweathermap.org/img/wn/10d@2x.png",
+      ),
+      const WeatherVo(
+        countryIcon: "🇺🇸",
+        country: "United States",
+        city: "New York",
+        temperature: 38,
+        windSpeed: 8.75,
+        weatherIcon: "http://openweathermap.org/img/wn/10d@2x.png",
+      ),
     ];
     return Scaffold(
       appBar: AppBar(
