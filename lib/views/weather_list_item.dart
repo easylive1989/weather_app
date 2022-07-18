@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/views/weather_vo.dart';
+import 'package:weather_app/vo/weather_vo.dart';
 
 class WeatherListItem extends StatelessWidget {
   const WeatherListItem({
