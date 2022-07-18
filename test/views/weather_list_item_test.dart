@@ -4,8 +4,6 @@ import 'package:mocktail_image_network/mocktail_image_network.dart';
 import 'package:weather_app/views/weather_list_item.dart';
 import 'package:weather_app/vo/weather_vo.dart';
 
-import 'weather_list_screen_test.dart';
-
 main() {
   testWidgets("weather list item have temperature and wind speed",
       (tester) async {
@@ -18,11 +16,20 @@ main() {
         windSpeed: 8.75,
         weatherIcon: "http://openweathermap.org/img/wn/10d@2x.png",
       );
-      await tester
-          .pumpWidget(MaterialApp(home: WeatherListItem(weather: weather)));
+
+      await whenDisplay(tester, WeatherListItem(weather: weather));
 
       thenShouldShow(find.text("38.0 °C"), findsOneWidget);
       thenShouldShow(find.text("8.75"), findsOneWidget);
     });
   });
+}
+
+Future<void> whenDisplay(
+    WidgetTester tester, WeatherListItem weatherListItem) async {
+  await tester.pumpWidget(MaterialApp(home: weatherListItem));
+}
+
+void thenShouldShow(Finder finder, Matcher matcher) {
+  expect(finder, matcher);
 }
