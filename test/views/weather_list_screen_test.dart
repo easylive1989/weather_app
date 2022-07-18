@@ -7,10 +7,12 @@ import 'package:weather_app/views/weather_list_item.dart';
 import 'package:weather_app/views/weather_list_screen.dart';
 import 'package:weather_app/vo/weather_vo.dart';
 
+late List<WeatherVo> weatherList;
+
 void main() {
   testWidgets("open app should show weather list", (tester) async {
     await mockNetworkImages(() async {
-      var weatherList = [
+      givenWeatherList([
         const WeatherVo(
           countryIcon: "🇼🇸",
           country: "Taiwan",
@@ -27,18 +29,36 @@ void main() {
           windSpeed: 8.75,
           weatherIcon: "http://openweathermap.org/img/wn/10d@2x.png",
         ),
-      ];
+      ]);
 
-      await tester.pumpWidget(
-        ProviderScope(
-          overrides: [
-            weatherListProvider.overrideWithValue(StateController(weatherList)),
-          ],
-          child: const MaterialApp(home: WeatherListScreen()),
-        ),
+      await whenDisplay(tester, const WeatherListScreen());
+
+      thenShouldShow(
+        find.byType(WeatherListItem),
+        findsNWidgets(2),
       );
-
-      expect(find.byType(WeatherListItem), findsNWidgets(2));
     });
   });
+}
+
+void thenShouldShow(Finder finder, Matcher matcher) {
+  expect(finder, matcher);
+}
+
+void givenWeatherList(List<WeatherVo> list) {
+  weatherList = list;
+}
+
+Future<void> whenDisplay(
+  WidgetTester tester,
+  Widget child,
+) async {
+  await tester.pumpWidget(
+    ProviderScope(
+      overrides: [
+        weatherListProvider.overrideWithValue(StateController(weatherList)),
+      ],
+      child: MaterialApp(home: child),
+    ),
+  );
 }
