@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather_app/views/weather_list_screen.dart';
 
 void main() {
@@ -10,8 +11,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: WeatherListScreen(),
+    return const ProviderScope(
+      child: MaterialApp(
+        home: WeatherListScreen(),
+      ),
     );
   }
 }
